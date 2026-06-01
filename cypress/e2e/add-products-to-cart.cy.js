@@ -2,8 +2,7 @@ describe('Caso de teste 12: Adicionar produtos ao carrinho', () => {
   it('deve adicionar dois produtos ao carrinho e validar os detalhes do carrinho', () => {
     cy.visitarURL();
 
-    cy.url().should('eq', 'https://www.automationexercise.com/');
-    cy.get('#slider-carousel').should('be.visible');
+    cy.validarHomePage();
 
     cy.irParaProdutos();
 
@@ -13,17 +12,20 @@ describe('Caso de teste 12: Adicionar produtos ao carrinho', () => {
 
     cy.adicionarProdutoAoCarrinho(0);
 
-    cy.get('.btn-success')
-      .contains('Continue Shopping')
-      .should('be.visible')
-      .click();
+    cy.continuarComprando();
 
     cy.adicionarProdutoAoCarrinho(1);
 
-    cy.irParaCarrinho();
+    cy.get('.modal-content')
+      .should('be.visible')
+      .within(() => {
+        cy.get('a[href="/view_cart"]')
+          .contains('View Cart')
+          .should('be.visible')
+          .click();
+      });
 
-    cy.url().should('include', '/view_cart');
-    cy.get('#cart_info_table').should('be.visible');
+    cy.validarPaginaCarrinho();
 
     cy.get('#cart_info_table tbody tr').should('have.length', 2);
 

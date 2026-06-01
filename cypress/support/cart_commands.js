@@ -1,10 +1,4 @@
-Cypress.Commands.add('adicionarProdutoAoCarrinho', (index = 0) => {
-  cy.get('.features_items .product-image-wrapper')
-    .eq(index)
-    .trigger('mouseover');
-
-  cy.get('.features_items .product-image-wrapper')
-    .eq(index)
-    .contains('Add to cart')
-    .click();
+Cypress.Commands.add('validarPaginaCarrinho', () => {
+  cy.url().should('include', '/view_cart');
+  cy.get('#cart_info_table').should('be.visible');
 });
