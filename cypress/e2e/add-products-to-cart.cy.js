@@ -2,8 +2,7 @@ describe('Caso de teste 12: Adicionar produtos ao carrinho', () => {
   it('deve adicionar dois produtos ao carrinho e validar os detalhes do carrinho', () => {
     cy.visitarURL();
 
-    cy.url().should('eq', 'https://www.automationexercise.com/');
-    cy.get('#slider-carousel').should('be.visible');
+    cy.validarHomePage();
 
     cy.irParaProdutos();
 
@@ -13,10 +12,7 @@ describe('Caso de teste 12: Adicionar produtos ao carrinho', () => {
 
     cy.adicionarProdutoAoCarrinho(0);
 
-    cy.get('.btn-success')
-      .contains('Continue Shopping')
-      .should('be.visible')
-      .click();
+    cy.continuarComprando();
 
     cy.adicionarProdutoAoCarrinho(1);
 
