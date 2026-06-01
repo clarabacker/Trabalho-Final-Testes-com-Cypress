@@ -16,10 +16,16 @@ describe('Caso de teste 12: Adicionar produtos ao carrinho', () => {
 
     cy.adicionarProdutoAoCarrinho(1);
 
-    cy.irParaCarrinho();
+    cy.get('.modal-content')
+      .should('be.visible')
+      .within(() => {
+        cy.get('a[href="/view_cart"]')
+          .contains('View Cart')
+          .should('be.visible')
+          .click();
+      });
 
-    cy.url().should('include', '/view_cart');
-    cy.get('#cart_info_table').should('be.visible');
+    cy.validarPaginaCarrinho();
 
     cy.get('#cart_info_table tbody tr').should('have.length', 2);
 
