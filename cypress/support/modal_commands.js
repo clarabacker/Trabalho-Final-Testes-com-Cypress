@@ -8,3 +8,14 @@ Cypress.Commands.add('continuarComprando', () => {
         .click();
     });
 });
+
+Cypress.Commands.add('verCarrinho', () => {
+  cy.get('.modal-content')
+    .should('be.visible')
+    .within(() => {
+      cy.get('a[href="/view_cart"]')
+        .contains('View Cart')
+        .should('be.visible')
+        .click();
+    });
+});
