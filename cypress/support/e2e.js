@@ -17,3 +17,6 @@
 import './commands';
 import './navigation_commands';
 import './cart_commands';
+import './home_commands';
+import './products_commands';
+import './modal.commands';
