@@ -16,14 +16,7 @@ describe('Caso de teste 12: Adicionar produtos ao carrinho', () => {
 
     cy.adicionarProdutoAoCarrinho(1);
 
-    cy.get('.modal-content')
-      .should('be.visible')
-      .within(() => {
-        cy.get('a[href="/view_cart"]')
-          .contains('View Cart')
-          .should('be.visible')
-          .click();
-      });
+    cy.verCarrinho();
 
     cy.validarPaginaCarrinho();
 
