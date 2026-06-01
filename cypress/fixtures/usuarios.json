@@ -1,0 +1,11 @@
+{
+  "usuarioExistente": {
+    "nome": "Test Existing",
+    "email": "testuser_existing@automation.com",
+    "senha": "Test@12345"
+  },
+  "usuarioInvalido": {
+    "email": "invalidemail@notexist.com",
+    "senha": "SenhaErrada123"
+  }
+}

@@ -1,22 +1,18 @@
 // ***********************************************************
-// This example support/e2e.js is processed and
-// loaded automatically before your test files.
-//
-// This is a great place to put global configuration and
-// behavior that modifies Cypress.
-//
-// You can change the location of this file or turn off
-// automatically serving support files with the
-// 'supportFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/configuration
+// Arquivo de suporte carregado automaticamente antes dos testes
 // ***********************************************************
 
-// Import commands.js using ES2015 syntax:
+// Suprime erros de JS não capturados do site (ads, trackers, etc.)
+Cypress.on('uncaught:exception', () => false);
+
+// Comandos globais
 import './commands';
+
+// Comandos por domínio
 import './navigation_commands';
-import './cart_commands';
 import './home_commands';
+import './auth_commands';
+import './cart_commands';
+import './modal_commands';
 import './products_commands';
-import './modal.commands';
+import './contact_commands';
