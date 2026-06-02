@@ -15,4 +15,3 @@ import './auth_commands';
 import './cart_commands';
 import './modal_commands';
 import './products_commands';
-import './contact_commands';

@@ -6,9 +6,7 @@ describe('Caso de teste 12: Adicionar produtos ao carrinho', () => {
 
     cy.irParaProdutos();
 
-    cy.url().should('include', '/products');
-    cy.get('.features_items').should('be.visible');
-    cy.contains('All Products').should('be.visible');
+    cy.validarProdutos();
 
     cy.adicionarProdutoAoCarrinho(0);
 

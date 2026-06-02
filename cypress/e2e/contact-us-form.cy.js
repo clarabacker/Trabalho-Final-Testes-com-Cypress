@@ -1,44 +1,64 @@
-/**
- * Caso de Teste 6: Formulário de Contato
- * Referência: https://www.automationexercise.com/test_cases#collapse6
- */
+const contato = {
+  nome: 'Automation Tester',
+  email: 'automation@test.com',
+  assunto: 'Teste Automatizado - Cypress',
+  mensagem: 'Mensagem enviada via teste automatizado com Cypress.',
+};
+
+const validarContactUs = () => {
+  cy.location('pathname').should('eq', '/contact_us');
+  cy.contains('h2', 'Get In Touch').should('be.visible');
+};
+
+const irParaContactUs = () => {
+  cy.get('ul.nav.navbar-nav')
+    .contains('a[href="/contact_us"]', 'Contact us')
+    .should('be.visible')
+    .click();
+};
+
+const preencherFormularioContato = ({ nome, email, assunto, mensagem }) => {
+  cy.get('[data-qa="name"]').type(nome);
+  cy.get('[data-qa="email"]').type(email);
+  cy.get('[data-qa="subject"]').type(assunto);
+  cy.get('[data-qa="message"]').type(mensagem);
+};
+
 describe('Caso de teste 6: Formulário de contato', () => {
   it('deve enviar o formulário de contato com sucesso', () => {
-    // 1-3. Acessa a home e valida
     cy.visitarURL();
     cy.validarHomePage();
 
-    // 4-5. Navega para Contact Us e valida 'GET IN TOUCH'
-    cy.irParaContatoUs();
-    cy.get('.contact-form h2').should('contain', 'Get In Touch');
+    irParaContactUs();
+    validarContactUs();
 
-    // 6. Preenche o formulário de contato
-    cy.preencherFormularioContato({
-      nome: 'Automation Tester',
-      email: 'automation@test.com',
-      assunto: 'Teste Automatizado - Cypress',
-      mensagem: 'Mensagem enviada via teste automatizado com Cypress.',
+    preencherFormularioContato(contato);
+
+    cy.get('[name="upload_file"]').selectFile(
+      'cypress/fixtures/test-upload.txt'
+    );
+
+    cy.get('[name="upload_file"]').should(($input) => {
+      const file = $input.prop('files')[0];
+
+      expect(file).to.exist;
+      expect(file.name).to.equal('test-upload.txt');
     });
 
-    // 7. Faz upload de arquivo
-    cy.get('[name="upload_file"]').selectFile({
-      contents: Cypress.Buffer.from('arquivo de teste cypress'),
-      fileName: 'test-upload.txt',
-      mimeType: 'text/plain',
+    cy.on('window:confirm', (text) => {
+      expect(text).to.contains('Press OK to proceed!');
+      return true;
     });
 
-    // 8-9. Clica em Submit e aceita o alert
-    cy.get('[data-qa="submit-button"]').click();
-    cy.on('window:confirm', () => true);
+    cy.get('[data-qa="submit-button"]').should('be.visible').click();
 
-    // 10. Valida mensagem de sucesso
     cy.get('.status.alert-success').should(
       'contain',
       'Success! Your details have been submitted successfully.'
     );
 
-    // 11. Clica em Home e valida que voltou para a home
-    cy.get('#form-section a.btn').contains('Home').click();
+    cy.get('#form-section .btn').contains('Home').should('be.visible').click();
+
     cy.validarHomePage();
   });
 });
